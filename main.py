@@ -1,6 +1,8 @@
 from data.breastmnist import BreastMNISTLoader
 from A.config import ModelConfig as SVMModelConfig
 from A.train import ModelATrainer
+from B.config import ModelBConfig
+from B.train import ModelBTrainer
 
 
 def main():
@@ -24,6 +26,23 @@ def main():
     results = trainer.run(data)
 
     print("Model A results:", results)
+
+    config = ModelBConfig(
+        seed=42,
+        batch_size=128,
+        epochs=20,
+        learning_rate=1e-3,
+        weight_decay=1e-4,
+        use_augmentation=True,
+        device="cpu"
+    )
+
+    trainer = ModelBTrainer(config)
+    results = trainer.run(data)
+
+    print("Model B results:")
+    for k, v in results.items():
+        print(f"{k}: {v:.4f}")
 
 
 if __name__ == "__main__":
