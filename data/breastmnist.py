@@ -8,8 +8,15 @@ from utils.seed import set_seed
 from utils.logger import CustomLogger
 
 
-class BreastMNISTLoader():
-    def __init__(self, root_dir: str, val_split: float, test_split: float, normalize: bool, seed: int) -> None:
+class BreastMNISTLoader:
+    def __init__(
+        self,
+        root_dir: str,
+        val_split: float,
+        test_split: float,
+        normalize: bool,
+        seed: int,
+    ) -> None:
         self.root_dir = root_dir
         self.val_split = val_split
         self.test_split = test_split
@@ -17,8 +24,7 @@ class BreastMNISTLoader():
         self.seed = seed
 
         self.logger = CustomLogger().get_logger(
-            name=self.__class__.__name__,
-            log_file="logs/data_loader.log"
+            name=self.__class__.__name__, log_file="logs/data_loader.log"
         )
 
         set_seed(seed)
@@ -31,17 +37,9 @@ class BreastMNISTLoader():
 
         os.makedirs(self.root_dir, exist_ok=True)
 
-        train_data = BreastMNIST(
-            split="train",
-            download=False,
-            root=self.root_dir
-        )
+        train_data = BreastMNIST(split="train", download=False, root=self.root_dir)
 
-        test_data = BreastMNIST(
-            split="test",
-            download=False,
-            root=self.root_dir
-        )
+        test_data = BreastMNIST(split="test", download=False, root=self.root_dir)
 
         X = np.concatenate([train_data.imgs, test_data.imgs]).astype("float32")
         y = np.concatenate([train_data.labels, test_data.labels]).squeeze().astype(int)
@@ -57,11 +55,7 @@ class BreastMNISTLoader():
     def _split(self, X, y) -> Dict[str, tuple]:
         """Split the datasets into train, val, and test datasets."""
         X_train, X_test, y_train, y_test = train_test_split(
-            X,
-            y,
-            test_size=self.test_split,
-            stratify=y,
-            random_state=self.seed
+            X, y, test_size=self.test_split, stratify=y, random_state=self.seed
         )
 
         val_ratio = self.val_split / (1.0 - self.test_split)
@@ -71,7 +65,7 @@ class BreastMNISTLoader():
             y_train,
             test_size=val_ratio,
             stratify=y_train,
-            random_state=self.seed
+            random_state=self.seed,
         )
 
         return {

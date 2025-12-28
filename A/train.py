@@ -8,11 +8,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 
 class ModelATrainer(BaseTrainer):
     def __init__(self, config: ModelConfig):
-        super().__init__(
-            model_name="ModelA",
-            log_dir="logs/modelA",
-            seed=config.seed
-        )
+        super().__init__(model_name="ModelA", log_dir="logs/modelA", seed=config.seed)
         self.config = config
 
     def _build_model(self):

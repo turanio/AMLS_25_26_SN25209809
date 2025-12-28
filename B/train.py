@@ -7,16 +7,14 @@ from PIL import Image
 
 from utils.base_trainer import BaseTrainer
 from B.model import CNN
-from B.transforms import (
-    get_train_transforms_with_aug,
-    get_train_transforms_without_aug
-)
+from B.transforms import get_train_transforms_with_aug, get_train_transforms_without_aug
 
 
 class NumpyImageDataset(Dataset):
     """
     Torch Dataset wrapping NumPy images.
     """
+
     def __init__(self, X, y, transform=None):
         self.X = X
         self.y = y
@@ -40,11 +38,7 @@ class NumpyImageDataset(Dataset):
 
 class ModelBTrainer(BaseTrainer):
     def __init__(self, config):
-        super().__init__(
-            model_name="ModelB",
-            log_dir="logs/modelB",
-            seed=config.seed
-        )
+        super().__init__(model_name="ModelB", log_dir="logs/modelB", seed=config.seed)
 
         self.config = config
         self.device = torch.device(config.device)
@@ -56,7 +50,7 @@ class ModelBTrainer(BaseTrainer):
         self.optimizer = Adam(
             self.model.parameters(),
             lr=self.config.learning_rate,
-            weight_decay=self.config.weight_decay
+            weight_decay=self.config.weight_decay,
         )
 
         self.criterion = BCEWithLogitsLoss()
@@ -70,14 +64,10 @@ class ModelBTrainer(BaseTrainer):
             else get_train_transforms_without_aug()
         )
 
-        train_dataset = NumpyImageDataset(
-            X_train, y_train, transform=transform
-        )
+        train_dataset = NumpyImageDataset(X_train, y_train, transform=transform)
 
         train_loader = DataLoader(
-            train_dataset,
-            batch_size=self.config.batch_size,
-            shuffle=True
+            train_dataset, batch_size=self.config.batch_size, shuffle=True
         )
 
         self.model.train()
@@ -106,14 +96,11 @@ class ModelBTrainer(BaseTrainer):
         X_test, y_test = data["test"]
 
         test_dataset = NumpyImageDataset(
-            X_test, y_test,
-            transform=get_train_transforms_without_aug()
+            X_test, y_test, transform=get_train_transforms_without_aug()
         )
 
         test_loader = DataLoader(
-            test_dataset,
-            batch_size=self.config.batch_size,
-            shuffle=False
+            test_dataset, batch_size=self.config.batch_size, shuffle=False
         )
 
         self.model.eval()

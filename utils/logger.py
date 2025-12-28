@@ -15,17 +15,10 @@ class CustomLogger:
         if log_dir:
             os.makedirs(log_dir, exist_ok=True)
 
-        handler = RotatingFileHandler(
-            log_file,
-            maxBytes=5 * 1024 * 1024,
-            backupCount=3
-        )
+        handler = RotatingFileHandler(log_file, maxBytes=5 * 1024 * 1024, backupCount=3)
         handler.setLevel(level)
 
-        formatter = logging.Formatter(
-            self.LOG_FORMAT,
-            self.DATE_FORMAT
-        )
+        formatter = logging.Formatter(self.LOG_FORMAT, self.DATE_FORMAT)
         handler.setFormatter(formatter)
         return handler
 
@@ -53,12 +46,8 @@ class CustomLogger:
         )
 
         info_handler = self._create_handler(log_file, logging.INFO)
-        warning_handler = self._create_handler(
-            "logs/warnings.log", logging.WARNING
-        )
-        error_handler = self._create_handler(
-            "logs/errors.log", logging.ERROR
-        )
+        warning_handler = self._create_handler("logs/warnings.log", logging.WARNING)
+        error_handler = self._create_handler("logs/errors.log", logging.ERROR)
 
         logger.addHandler(console_handler)
         logger.addHandler(info_handler)

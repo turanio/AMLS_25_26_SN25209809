@@ -16,10 +16,7 @@ def main():
     data = loader.load()
 
     config = SVMModelConfig(
-        seed=42,
-        pca_n_components=64,
-        svm_c=1.0,
-        use_augmentation=True
+        seed=42, pca_n_components=64, svm_c=1.0, use_augmentation=True
     )
 
     svm_trainer = ModelATrainer(config)
@@ -32,14 +29,11 @@ def main():
         learning_rate=1e-3,
         weight_decay=1e-4,
         use_augmentation=True,
-        device="cpu"
+        device="cpu",
     )
 
     cnn_trainer = ModelBTrainer(config)
     cnn_trainer.run(data)
-
-    # for k, v in results.items():
-    #     print(f"{k}: {v:.4f}")
 
 
 if __name__ == "__main__":

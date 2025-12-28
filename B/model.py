@@ -6,6 +6,7 @@ class CNN(nn.Module):
     """
     CNN for 28x28 grayscale images
     """
+
     def __init__(self):
         super().__init__()
 

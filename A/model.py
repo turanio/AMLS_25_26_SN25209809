@@ -9,15 +9,12 @@ def build_model(config):
     steps = []
 
     steps.append(("scaler", StandardScaler()))
-    steps.append(("pca", PCA(
-        n_components=config.pca_n_components,
-        random_state=config.seed
-    )))
+    steps.append(
+        ("pca", PCA(n_components=config.pca_n_components, random_state=config.seed))
+    )
 
-    steps.append(("svm", SVC(
-        kernel="linear",
-        C=config.svm_c,
-        random_state=config.seed
-    )))
+    steps.append(
+        ("svm", SVC(kernel="linear", C=config.svm_c, random_state=config.seed))
+    )
 
     return Pipeline(steps)

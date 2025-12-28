@@ -17,13 +17,11 @@ class BaseTrainer(ABC):
         set_seed(seed)
 
         self.logger = CustomLogger().get_logger(
-            name=f"{model_name}.Trainer",
-            log_file=f"{log_dir}/train.log"
+            name=f"{model_name}.Trainer", log_file=f"{log_dir}/train.log"
         )
 
         self.output_logger = CustomLogger().get_logger(
-            name=f"{model_name}.Outputs",
-            log_file=f"{log_dir}/outputs.log"
+            name=f"{model_name}.Outputs", log_file=f"{log_dir}/outputs.log"
         )
 
         self.logger.info("Trainer initialized")

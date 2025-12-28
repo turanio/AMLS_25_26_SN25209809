@@ -28,12 +28,7 @@ def augment_one_per_image(X, y, seed=42):
 
         if choice == "rotate":
             angle = rng.uniform(-10, 10)
-            augmented = rotate(
-                augmented,
-                angle,
-                reshape=False,
-                mode="nearest"
-            )
+            augmented = rotate(augmented, angle, reshape=False, mode="nearest")
 
         elif choice == "flip":
             augmented = np.fliplr(augmented)
