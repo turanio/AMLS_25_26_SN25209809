@@ -1,11 +1,20 @@
-from data.breastmnist import BreastMNISTLoader
 from A.config import ModelConfig as SVMModelConfig
 from A.train import ModelATrainer
 from B.config import ModelConfig as CNNModelConfig
 from B.train import ModelBTrainer
+from data.breastmnist import BreastMNISTLoader
 
 
-def main():
+def main() -> None:
+    """Load data and train both models.
+
+    Configures and runs training for:
+    1. Model A: PCA + Linear SVM with data augmentation
+    2. Model B: Convolutional Neural Network with data augmentation
+
+    The BreastMNIST dataset is loaded with 10% validation split and 20% test split.
+    Results are logged to separate directories for each model.
+    """
     loader = BreastMNISTLoader(
         root_dir="Datasets",
         val_split=0.1,

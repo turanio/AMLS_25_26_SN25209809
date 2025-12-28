@@ -4,12 +4,29 @@ from logging.handlers import RotatingFileHandler
 
 
 class CustomLogger:
+    """Custom logger with rotating file handlers.
+
+    Provides structured logging with separate handlers for console output,
+    general logs, warnings, and errors. All file handlers use rotation to
+    prevent excessive disk usage.
+
+    Attributes:
+        LOG_FORMAT: Format string for log messages.
+        DATE_FORMAT: Format string for timestamps.
+    """
+
     LOG_FORMAT = "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
     DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
     def _create_handler(self, log_file: str, level: int) -> RotatingFileHandler:
-        """
-        Create a rotating file handler with standard formatting.
+        """Create a rotating file handler with standard formatting.
+
+        Args:
+            log_file: Path to the log file.
+            level: Logging level (e.g., logging.INFO, logging.WARNING).
+
+        Returns:
+            Configured RotatingFileHandler instance.
         """
         log_dir = os.path.dirname(log_file)
         if log_dir:
@@ -23,15 +40,19 @@ class CustomLogger:
         return handler
 
     def get_logger(self, name: str, log_file: str) -> logging.Logger:
-        """
-        Create or retrieve a configured logger.
+        """Create or retrieve a configured logger.
+
+        Creates a logger with multiple handlers:
+        - Console handler for INFO level and above
+        - File handler for all logs (rotating, 5MB max)
+        - Separate handlers for warnings and errors
 
         Args:
             name (str): Logger name (e.g. ModelA.Train)
-            log_file (str): Path to main log file
+            log_file (str): Path to the main log file
 
         Returns:
-            logging.Logger
+            Configured logging.Logger instance.
         """
         logger = logging.getLogger(name)
         logger.setLevel(logging.DEBUG)

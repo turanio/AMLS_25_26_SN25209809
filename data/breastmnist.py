@@ -1,14 +1,29 @@
-import numpy as np
-from medmnist import BreastMNIST
-from sklearn.model_selection import train_test_split
 import os
 from typing import Dict
 
-from utils.seed import set_seed
+import numpy as np
+from medmnist import BreastMNIST
+from sklearn.model_selection import train_test_split
+
 from utils.logger import CustomLogger
+from utils.seed import set_seed
 
 
 class BreastMNISTLoader:
+    """Loader for the BreastMNIST dataset.
+
+    Downloads (if needed), normalizes, and splits the BreastMNIST dataset
+    into training, validation, and test sets with stratification.
+
+    Attributes:
+        root_dir: Directory to store/load the dataset.
+        val_split: Proportion of data to use for validation.
+        test_split: Proportion of data to use for testing.
+        normalize: Whether to normalize images to [0, 1] range.
+        seed: Random seed for reproducibility.
+        logger: Logger instance for dataset operations.
+    """
+
     def __init__(
         self,
         root_dir: str,
@@ -17,6 +32,15 @@ class BreastMNISTLoader:
         normalize: bool,
         seed: int,
     ) -> None:
+        """Initialize the BreastMNIST loader.
+
+        Args:
+            root_dir: Directory to store/load the dataset.
+            val_split: Proportion of data for validation (e.g., 0.1 for 10%).
+            test_split: Proportion of data for testing (e.g., 0.2 for 20%).
+            normalize: Whether to normalize images to [0, 1] range.
+            seed: Random seed for reproducible splits.
+        """
         self.root_dir = root_dir
         self.val_split = val_split
         self.test_split = test_split
@@ -30,8 +54,14 @@ class BreastMNISTLoader:
         set_seed(seed)
 
     def load(self) -> Dict[str, tuple]:
-        """Loads the BreastMNIST dataset from BreastMNIST if defined directory is empty.
-        Otherwise read the file from root_dir.
+        """Load and split the BreastMNIST dataset.
+
+        Downloads the dataset if not already present in root_dir, then loads,
+        optionally normalizes, and splits into train/val/test sets.
+
+        Returns:
+            Dictionary with keys 'train', 'val', 'test', where each value is
+            a tuple (X, y) of images and labels.
         """
         self.logger.info("Loading BreastMNIST dataset")
 
@@ -53,7 +83,18 @@ class BreastMNISTLoader:
         return self._split(X, y)
 
     def _split(self, X, y) -> Dict[str, tuple]:
-        """Split the datasets into train, val, and test datasets."""
+        """Split the dataset into train, validation, and test sets.
+
+        Performs stratified splitting to maintain class balance across splits.
+
+        Args:
+            X: Full dataset of images.
+            y: Full dataset of labels.
+
+        Returns:
+            Dictionary with keys 'train', 'val', 'test', where each value is
+            a tuple (X_split, y_split).
+        """
         X_train, X_test, y_train, y_test = train_test_split(
             X, y, test_size=self.test_split, stratify=y, random_state=self.seed
         )
