@@ -1,5 +1,4 @@
 medmnist
-pandas
 numpy
 torch
 torchvision
