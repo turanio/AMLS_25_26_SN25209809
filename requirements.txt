@@ -1,0 +1,7 @@
+medmnist
+pandas
+numpy
+torch
+torchvision
+black
+flake8
