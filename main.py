@@ -21,6 +21,7 @@ def main() -> None:
         test_split=0.2,
         normalize=True,
         seed=42,
+        download=False,
     )
     data = loader.load()
 

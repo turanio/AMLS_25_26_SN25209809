@@ -31,6 +31,7 @@ class BreastMNISTLoader:
         test_split: float,
         normalize: bool,
         seed: int,
+        download: bool,
     ) -> None:
         """Initialize the BreastMNIST loader.
 
@@ -40,12 +41,14 @@ class BreastMNISTLoader:
             test_split: Proportion of data for testing (e.g., 0.2 for 20%).
             normalize: Whether to normalize images to [0, 1] range.
             seed: Random seed for reproducible splits.
+            download: Boolean value whether download or look for folder.
         """
         self.root_dir = root_dir
         self.val_split = val_split
         self.test_split = test_split
         self.normalize = normalize
         self.seed = seed
+        self.download = download
 
         self.logger = CustomLogger().get_logger(
             name=self.__class__.__name__, log_file="logs/data_loader.log"
@@ -67,9 +70,13 @@ class BreastMNISTLoader:
 
         os.makedirs(self.root_dir, exist_ok=True)
 
-        train_data = BreastMNIST(split="train", download=False, root=self.root_dir)
+        train_data = BreastMNIST(
+            split="train", download=self.download, root=self.root_dir
+        )
 
-        test_data = BreastMNIST(split="test", download=False, root=self.root_dir)
+        test_data = BreastMNIST(
+            split="test", download=self.download, root=self.root_dir
+        )
 
         X = np.concatenate([train_data.imgs, test_data.imgs]).astype("float32")
         y = np.concatenate([train_data.labels, test_data.labels]).squeeze().astype(int)
