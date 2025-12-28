@@ -4,3 +4,6 @@ torch
 torchvision
 black
 flake8
+isort
+scikit-learn
+scipy
