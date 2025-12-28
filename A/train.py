@@ -50,8 +50,4 @@ class ModelATrainer(BaseTrainer):
             "f1": f1_score(y_test, y_pred, zero_division=0),
         }
 
-        self.logger.info("Evaluation completed")
-        for k, v in metrics.items():
-            self.output_logger.info(f"{k}: {v:.4f}")
-
         return metrics

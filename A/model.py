@@ -8,9 +8,7 @@ def build_model(config):
     """build model function."""
     steps = []
 
-    if config.standardize:
-        steps.append(("scaler", StandardScaler()))
-
+    steps.append(("scaler", StandardScaler()))
     steps.append(("pca", PCA(
         n_components=config.pca_n_components,
         random_state=config.seed

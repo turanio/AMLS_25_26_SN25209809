@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class ModelBConfig:
+class ModelConfig:
     seed: int = 42
 
     # Training

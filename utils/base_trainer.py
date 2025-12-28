@@ -61,4 +61,4 @@ class BaseTrainer(ABC):
     def _log_results(self, results: dict):
         self.output_logger.info("Final results:")
         for key, value in results.items():
-            self.output_logger.info(f"{key}: {value}")
+            self.output_logger.info(f"{key}: {value:.4f}")

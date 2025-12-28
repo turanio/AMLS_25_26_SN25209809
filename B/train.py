@@ -137,7 +137,4 @@ class ModelBTrainer(BaseTrainer):
             "f1": f1_score(all_targets, all_preds, zero_division=0),
         }
 
-        for k, v in metrics.items():
-            self.output_logger.info(f"{k}: {v:.4f}")
-
         return metrics
