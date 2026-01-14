@@ -45,7 +45,7 @@ AMLS_25_26_SN25209809/
 │   ├── logger.py              # Custom logging system
 │   └── seed.py                # Reproducibility utilities
 ├── logs/                       # Training logs (auto-generated)
-├── Datasets/                   # Dataset directory (auto-generated)
+├── Datasets/                   # Dataset directory
 ├── main.py                     # Main entry point
 ├── requirements.txt            # Python dependencies
 ├── environment.yml             # Conda environment specification
